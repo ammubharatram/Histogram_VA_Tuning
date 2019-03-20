@@ -1,0 +1,110 @@
+[
+  {
+    "RatioBins": "(-99.1,-51.1]",
+    "Count_nonSAR": 163,
+    "Fraction_nonSAR": 97.6,
+    "Count_SAR": 4,
+    "Fraction_SAR": 2.4,
+    "Count_RATIO_NUM_MT103_12M": 167,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(-51.1,-36.4]",
+    "Count_nonSAR": 165,
+    "Fraction_nonSAR": 98.8,
+    "Count_SAR": 2,
+    "Fraction_SAR": 1.2,
+    "Count_RATIO_NUM_MT103_12M": 167,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(-36.4,-30]",
+    "Count_nonSAR": 109,
+    "Fraction_nonSAR": 99.09,
+    "Count_SAR": 1,
+    "Fraction_SAR": 0.91,
+    "Count_RATIO_NUM_MT103_12M": 168,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(-30,30]",
+    "Count_nonSAR": 0,
+    "Fraction_nonSAR": 0,
+    "Count_SAR": 0,
+    "Fraction_SAR": 0,
+    "Count_RATIO_NUM_MT103_12M": 0,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(30,31.8]",
+    "Count_nonSAR": 56,
+    "Fraction_nonSAR": 96.55,
+    "Count_SAR": 2,
+    "Fraction_SAR": 3.45,
+    "Count_RATIO_NUM_MT103_12M": 168,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(31.8,36.5]",
+    "Count_nonSAR": 158,
+    "Fraction_nonSAR": 94.61,
+    "Count_SAR": 9,
+    "Fraction_SAR": 5.39,
+    "Count_RATIO_NUM_MT103_12M": 167,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(36.5,43.6]",
+    "Count_nonSAR": 165,
+    "Fraction_nonSAR": 98.21,
+    "Count_SAR": 3,
+    "Fraction_SAR": 1.79,
+    "Count_RATIO_NUM_MT103_12M": 168,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(43.6,51.6]",
+    "Count_nonSAR": 163,
+    "Fraction_nonSAR": 97.6,
+    "Count_SAR": 4,
+    "Fraction_SAR": 2.4,
+    "Count_RATIO_NUM_MT103_12M": 167,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(51.6,63.9]",
+    "Count_nonSAR": 166,
+    "Fraction_nonSAR": 98.81,
+    "Count_SAR": 2,
+    "Fraction_SAR": 1.19,
+    "Count_RATIO_NUM_MT103_12M": 168,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(63.9,88.9]",
+    "Count_nonSAR": 165,
+    "Fraction_nonSAR": 98.8,
+    "Count_SAR": 2,
+    "Fraction_SAR": 1.2,
+    "Count_RATIO_NUM_MT103_12M": 167,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(88.9,140]",
+    "Count_nonSAR": 166,
+    "Fraction_nonSAR": 98.81,
+    "Count_SAR": 2,
+    "Fraction_SAR": 1.19,
+    "Count_RATIO_NUM_MT103_12M": 168,
+    "Fraction_Total": 100
+  },
+  {
+    "RatioBins": "(140,616]",
+    "Count_nonSAR": 167,
+    "Fraction_nonSAR": 100,
+    "Count_SAR": 0,
+    "Fraction_SAR": 0,
+    "Count_RATIO_NUM_MT103_12M": 167,
+    "Fraction_Total": 100
+  }
+]
