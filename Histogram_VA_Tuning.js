@@ -30,7 +30,7 @@ d3.json('menu.json').then(data => {
 
   const ys = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.Count_SAR)])
-    .range([0,graphHeight]);
+    .range([0,d3.max(data, d => d.Count_nonSAR)]);
  
   const x = d3.scaleBand()
     .domain(data.map(item => item.RatioBins))
@@ -57,11 +57,10 @@ d3.json('menu.json').then(data => {
   .attr("height", d => ys(d.Count_SAR))
   .attr('fill', 'yellow')
   .attr('x', d => x(d.RatioBins))
-  .attr('y', d => ys(d.Count_SAR));
+  .attr('y', d =>  y(d.Count_nonSAR)-ys(d.Count_SAR));
 
   // append the enter selection to the DOM
   rects.enter()
-  
     .append('rect')
     .transition().duration(500)
       .attr('width', x.bandwidth)
@@ -69,16 +68,21 @@ d3.json('menu.json').then(data => {
       
       .style('fill', '#000000') //black
       .attr('x', (d) => x(d.RatioBins))
-      .attr('y', d => y(d.Count_nonSAR))
+      .attr('y', d => y(d.Count_nonSAR));
       
   rects2.enter()
     .append('rect')
     .transition().duration(500)
       .attr('width', x.bandwidth)
-      .attr("height", d => ys(d.Count_SAR))
+      .attr("height", d =>  ys(d.Count_SAR))
       .style('fill', '#FFFF00') //yellow
       .attr('x', d => x(d.RatioBins))
       .attr('y', d => y(d.Count_nonSAR)- ys(d.Count_SAR));
+
+
+      
+      console.log(data.map(d=>y(d.Count_nonSAR)));
+      console.log(data.map(d=>ys(d.Count_SAR)));
   // create & call axesit
   const xAxis = d3.axisBottom(x);
   const yAxis = d3.axisLeft(y)
@@ -104,7 +108,7 @@ d3.json('menu.json').then(data => {
 
 
 // ######## legend setup #######
-console.log(d3["schemeSet3"]);
+//console.log(d3["schemeSet3"]);
 
 // ordinal colour scale
 var colour = d3.scaleOrdinal(['#FFFF00','#000000','#ff0000']);
@@ -121,7 +125,7 @@ const legend = d3.legendColor()
   .shape('path', d3.symbol().type(d3.symbolCircle)())
   .shapePadding(10)
   .scale(colour);
-console.log( d3.max(data, d =>  d.Fraction_SAR));
+//console.log( d3.max(data, d =>  d.Fraction_SAR));
 // update legend
 legendGroup.call(legend);
 legendGroup.selectAll('text').attr('fill', 'black');
@@ -152,7 +156,7 @@ const path = graph.append('path')
 
 
 y_line.domain([0, d3.max(data, d =>  d.Fraction_SAR)]);
-console.log(y_line);
+//console.log(y_line);
 
 // update path data
 path.attr('fill', 'none')
@@ -229,11 +233,22 @@ svg.append("text")
 .html(" Freq &#8593;")
 ;  
     
-var slider_input;
+/*########## SLIDER ######################### */
+var slider_input=0;
 
 
-console.log( x(data.RatioBins));
 var threshold_slider = [0, 1, 2,3,4,5,6,7,8,9,10,11];
+
+// Current Threshold is at 4//
+//Slider_Bins to show
+var slider_bins = (data.map(item => item.RatioBins));
+
+console.log(slider_bins);
+d3.select('p#value-step').text(slider_bins[4]); //default value
+var points = [
+  [x(data[4-1].RatioBins)+ x.bandwidth()/2, 800],
+  [x(data[4-1].RatioBins)+ x.bandwidth()/2, -800],
+  ];
 // Step
 var sliderStep = d3
 .sliderBottom()
@@ -243,16 +258,46 @@ var sliderStep = d3
 .width(300)
 .ticks(5)
 .step(1)
-.default(6)
+.default(4)
 .on('onchange', val => {
- 
-  d3.select('p#value-step').text(val);
-  slider_input = parseInt(val); 
+  //test();
+  d3.select('p#value-step').text(slider_bins[val]);
+  //slider_input = 6;
+  slider_input = val; 
+  //console.log(slider_input);
+  points = [
+    [x(data[slider_input].RatioBins)+ x.bandwidth()/2, 800],
+    [x(data[slider_input].RatioBins)+ x.bandwidth()/2, -800],
+    ];
+  path2.attr('d', threshold(points))
+  //tp rate
+  var tp_rate = data[slider_input].Fraction_SAR;
+  
+  //fp rate
+  if(data[slider_input].Count_nonSAR != 0 ) {var fp_rate = data[slider_input].Count_nonSAR/ (data[slider_input].Count_SAR + data[slider_input].Count_nonSAR)
+  } else {var fp_rate =0};
+  //num alerts
+  var num_alerts = data[slider_input].Count_RATIO_NUM_MT103_12M;
+  d3.select("#first").html(`True Positive Rate   : ${d3.format('.2f')(tp_rate)}% <br/>`);
+  d3.select("#second").html(`False Positive Rate   : ${d3.format(',.2%')(fp_rate)}  <br/>`);
+  d3.select("#third").html(`Number of Alerts  : ${(num_alerts)}  <br/>`);
 });
+/* 
+function test(){
+  console.log("59565416");
+  console.log(slider_input);
+} */
+
+/* function show_results(results) {
+  // We want this to show the "results" from the callback function.
+  alert(slider_input);
+ } */
+
+//console.log(slider_input);
 
 
 console.log(sliderStep.value());
-console.log(d3.select('p#value-step').text(sliderStep.value().toString()));
+
 var gStep = d3
 .select('div#slider-step')
 .append('svg')
@@ -262,8 +307,7 @@ var gStep = d3
 .attr('transform', 'translate(30,30)');
 
 gStep.call(sliderStep);
-
-d3.select('p#value-step').text((sliderStep.value()));
+;
 
 //Threshold line
 // d3 line path generator
@@ -277,10 +321,6 @@ console.log(sliderStep.value());
 console.log(document.getElementById("value-step").innerHTML);
 
 
-var points = [
-  [x(data[threshold_slider[4]-1].RatioBins)+ x.bandwidth()/2, 800],
-  [x(data[threshold_slider[4]-1].RatioBins)+ x.bandwidth()/2, -800],
-  ];
 // update path data
 path2.attr('fill', 'none')
 .transition().duration(2500)  
@@ -289,6 +329,14 @@ path2.attr('fill', 'none')
   .attr('d', threshold(points))
   ;
 
-console.log(x(data[2].RatioBins));
+// console.log(x(data[threshold_slider[4]-1].RatioBins));
+// console.log(x(data[2].RatioBins));
+// console.log(slider_input);
+
+// Calculate FP Rate, TP Rate and ALert%
+// For threshold : +/-30
+
+
+
 
 });
