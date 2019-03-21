@@ -22,7 +22,7 @@ const xAxisGroup = graph.append('g')
 
 const yAxisGroup = graph.append('g');
 
-d3.json('menu.json').then(data => {
+d3.json('data.json').then(data => {
 
   const y = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.Count_nonSAR)])
